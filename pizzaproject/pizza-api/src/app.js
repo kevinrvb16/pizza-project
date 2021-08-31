@@ -1,14 +1,13 @@
 const express = require('express')
-const server = express()
+const App = express()
 const port = 3003
 const indexRoute = require('./routes/index')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const url = 'mongodb://localhost:27017/pizzaria'
+const cors = require('cors')
 
 mongoose.connect(url,{
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 500,
     poolSize: 5,
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -16,9 +15,6 @@ mongoose.connect(url,{
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'))
-db.once('open', function() {
-    console.log('Succesfully connected')
-})
 
 db.on('disconnected', () => {
     console.log('Applicação desconectada do bando de dados!')
@@ -27,15 +23,13 @@ db.on('disconnected', () => {
 db.on('connected', () => {
     console.log('Aplicação conectada ao banco de dados!')
 })
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: false }));
-//server.use('/pizza',indexRoute)
 
-server.listen(port, (req,res) => {
+App.use(bodyParser.json());
+App.use(bodyParser.urlencoded({ extended: true }));
+App.use(cors())
+
+App.listen(port, (req,res) => {
     console.log(`Servidor está executando na porta: ${port}` )
 })
 
-server.use(indexRoute)
-
-//Pesquisa todos os docs com a propriedade de sabor que comeca com calab em formato de array na callback
-//Pizza.find( {sabor: /^calab/ }, callback)
+App.use(indexRoute)

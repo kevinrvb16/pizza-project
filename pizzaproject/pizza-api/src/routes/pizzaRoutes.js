@@ -1,40 +1,25 @@
 const express = require('express')
 const router = express.Router()
-const PizzaController = require('../controller/pizzascontroller')
+const pizzascontroller = require('../controller/pizzascontroller')
 
 router.post('/', (req, res) => {
-    try {
-        createPizza(req, res)
-    }
-    catch {
-        console.log('erro')
-    }
-    //return res.PizzaController.store(req, res)
+    pizzascontroller.createPizza(req, res)
 })
 
-router.get('/', (req,res) => {
-    try {
-        return res.status(200).send('Olá bem vindo a pizzaria, está é a rota para cadastrar uma pizza!')
-    }
-    catch {
-        return res.send({ error: 'Erro no Get!'})
-    }
+router.get('/', (req, res) => {
+    pizzascontroller.listPizza(req, res)
 })
 
-router.put('/', (req,res) => {
-    try {
-        res.status(200).send('Olá, esta é a rota para editar uma pizzaria')
-    }
-    catch {
-        return res.send({ error: 'Erro no Put!'})
-    }
+//Rota de edição do tamanho da pizza. Primeiro parâmetro o objeto sabor pra saber qual pizza será alterada e o segundo parametro o objeto tamanho que recebe o novo tamanho
+router.put('/:id', async (req, res) => {
+    pizzascontroller.editPizza(req, res)
 })
 
-router.delete('/', (req, res) => {
-    try {
-       res.status(200).send('Delete uma pizza')       
-    } catch{
-        return res.send({ error: 'Erro no Delete!'})
-    }
+router.delete('/', async (req, res) => {
+    pizzascontroller.deletePizza(req, res)
+})
+
+router.get('/:id', (req, res) => {
+    pizzascontroller.findPizza(req, res)
 })
 module.exports = router

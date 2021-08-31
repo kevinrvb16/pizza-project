@@ -3,8 +3,7 @@ const mongoose = require('mongoose')
 const PizzaSchema = new mongoose.Schema( {
     sabor: String,
     tamanho: Number,
-    fatias: Number,
-    borda: Boolean
+    imagem: String,
+    valor: Number
 })
-const pizza = mongoose.model('Pizza', PizzaSchema)
-module.exports = pizza
+module.exports = mongoose.model('Pizzas', PizzaSchema)

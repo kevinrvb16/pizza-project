@@ -2,9 +2,9 @@
   "name": "pizza-api",
   "version": "1.0.0",
   "description": "api de pizzaria",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/app.js"
   },
   "keywords": [
     "project",
@@ -13,8 +13,12 @@
   "author": "Kevin Rafael Velez Bernal",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongoose": "^5.13.4"
+    "gridfs-stream": "^1.1.1",
+    "mongoose": "^5.13.4",
+    "nodemon": "^2.0.12"
   }
 }

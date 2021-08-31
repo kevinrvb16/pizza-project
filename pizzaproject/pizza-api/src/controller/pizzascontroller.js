@@ -1,38 +1,66 @@
-const express = require('express')
-const server = express()
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const PizzaModel = require('../model/pizzas')
+const Pizza = require('../model/pizzas')
 
-class PizzaController {
-    async store(req, res) {
+const createPizza = async (req, res) => {
+    const { sabor, tamanho, imagem, valor } = req.body
+    if (!sabor || !tamanho || !imagem || !valor) return res.status(422).send({ error: "Dados insuficientes!" })
 
-        const { sabor, tamanho, fatias, borda } = req.body
+    try {
+        if (await Pizza.findOne({ sabor: sabor })) return res.status(400).send({ error: 'Pizza já cadastrada' })
 
-        const dados = {
-            sabor,
-            tamanho,
-            fatias,
-            borda
-        }
-
-        await PizzaModel.create(dados, (err) => {
-            if (err) return res.json({
-                error: true,
-                message: "Erro ao tentar inserir no mongoDB"
-            })
-
-            return res.json({
-                error: false,
-                message: "Pizza criada com sucesso"
-            })
-        })
+        const pizza = await Pizza.create({ ...req.body })
+        return res.send({ pizza })
     }
-
-    async createPizza(req, res){
-        const pizza = await PizzaModel.create({...req.body})
-
-        return res.send
+    catch (err) {
+        return res.status(400).send({ error: 'Erro ao tentar criar uma pizza!' })
     }
 }
-module.exports = PizzaController
+
+const listPizza = async (req, res) => {
+    try {
+        const pizzas = await Pizza.find({})
+        return res.send({ pizzas })
+    }
+    catch (err) {
+        return res.send({ error: 'Erro ao tentar listar uma pizza!' })
+    }
+}
+
+const editPizza = async (req, res) => {
+    try {
+        const { sabor, tamanho, imagem, valor} = req.body
+        const pizza = await Pizza.findByIdAndUpdate(req.params.id,
+            {
+                sabor,
+                tamanho,
+                imagem,
+                valor
+            }, { new: true })
+        return res.send({ pizza })
+    }
+    catch (err) {
+        return res.send({ error: 'Erro ao tentar editar uma pizza!' })
+    }
+}
+
+const deletePizza = async (req, res) => {
+
+    try {
+        if (!sabor) return res.status(422).send({ error: "Dados insuficientes!" })
+        await Pizza.deleteOne(req.body)
+        return res.status(204).send('Pizza deletada com sucesso!')
+    }
+    catch (err) {
+        return res.status(400).send({ error: 'Erro ao tentar deletar uma pizza!' })
+    }
+}
+
+const findPizza = async (req, res) => {
+    try {
+        const pizza = await Pizza.findById(req.params.id)
+        return res.send({ pizza })
+    }
+    catch (err) {
+        return res.send({ error: 'Erro ao tentar encontrar uma pizza!' })
+    }
+}
+module.exports = { createPizza, listPizza, deletePizza, editPizza, findPizza }
