@@ -45,9 +45,8 @@ const editPizza = async (req, res) => {
 const deletePizza = async (req, res) => {
 
     try {
-        if (!sabor) return res.status(422).send({ error: "Dados insuficientes!" })
-        await Pizza.deleteOne(req.body)
-        return res.status(204).send('Pizza deletada com sucesso!')
+        const pizza = await Pizza.findByIdAndDelete(req.params.id)
+        return res.status(204).send('Pizza deletada com sucesso!'+ {pizza})
     }
     catch (err) {
         return res.status(400).send({ error: 'Erro ao tentar deletar uma pizza!' })

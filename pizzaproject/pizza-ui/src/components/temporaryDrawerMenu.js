@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link } from 'react-scroll'
 import './routerLink.css'
 
 
@@ -37,12 +36,6 @@ export default function TemporaryDrawerMenu() {
       </Button><br></br>
       <Button >
         <RouterLink to="/create-pizza">Cadastrar Pizza</RouterLink>
-      </Button><br></br>
-      <Button  >
-        <RouterLink to="/edit-pizza">Editar Pizza</RouterLink>
-      </Button><br></br>
-      <Button>
-        <RouterLink to="/delete-pizza">Excluir Pizza</RouterLink>
       </Button>
     </Box>
   );
@@ -51,7 +44,7 @@ export default function TemporaryDrawerMenu() {
     <div>
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon fontSize="large" color="secondary"></MenuIcon></Button>
+          <Button onClick={toggleDrawer(anchor, true)}><MenuIcon fontSize="large" color="secondary"></MenuIcon>Menu</Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

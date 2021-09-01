@@ -4,7 +4,6 @@ import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import api from '../api';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-scroll'
@@ -54,12 +53,6 @@ export default function TitlebarImageList() {
           </Button>
           <Button>
             <RouterLink to="/create-pizza">Cadastrar Pizza</RouterLink>
-          </Button>
-          <Button>
-            <RouterLink to="/edit-pizza">Editar Pizza</RouterLink>
-          </Button>
-          <Button>
-            <RouterLink to="/delete-pizza">Excluir Pizza</RouterLink>
           </Button>
 
         </ImageListItem>

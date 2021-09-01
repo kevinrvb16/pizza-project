@@ -15,7 +15,7 @@ router.put('/:id', async (req, res) => {
     pizzascontroller.editPizza(req, res)
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     pizzascontroller.deletePizza(req, res)
 })
 
